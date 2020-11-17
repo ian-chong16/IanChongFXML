@@ -9,11 +9,20 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -41,9 +50,73 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button buttonDeletePM;
     
+    
+    
+    @FXML
+    private TextField textboxName;
+    
     @FXML
     private Button buttonSearch;
+    
+    @FXML
+    private TableView<Privatemessagemodel> pmTable;
 
+    @FXML
+    private TableColumn<Privatemessagemodel, Integer> ID;
+    
+    @FXML
+    private TableColumn<Privatemessagemodel, String> Name;
+    
+    @FXML
+    private TableColumn<Privatemessagemodel, String> PmName;
+    
+    @FXML
+    private TableColumn<Privatemessagemodel, Integer> PmID;
+    
+    @FXML
+    private TableColumn<Privatemessagemodel, String> PM;
+    
+    private ObservableList<Privatemessagemodel> pmData;
+            
+    
+    public void setTableData(List<Privatemessagemodel> pmList){
+        //Inspiration taken from Quiz 4 Demo Code
+        pmData = FXCollections.observableArrayList();
+        
+        pmList.forEach(s -> {
+            pmData.add(s);
+        });
+        
+        pmTable.setItems(pmData);
+        pmTable.refresh();
+    }       
+    
+        
+    
+    @FXML
+    void searchName(ActionEvent event){
+        //Inspiration taken from Quiz 4 Demo Code
+        System.out.println("Clicked");
+        
+        String name = textboxName.getText();
+        
+        List<Privatemessagemodel> yourPM = readByName(name);
+        
+        if (yourPM == null || yourPM.isEmpty()){
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information Dialog Box");// line 2
+            alert.setHeaderText("This is header section to write heading");// line 3
+            alert.setContentText("No student");// line 4
+            alert.showAndWait(); 
+        } 
+        
+        else{
+            setTableData(yourPM);
+        }
+    }
+    
+    
+    
     @FXML
     void createPM(ActionEvent event) {
         //inspiration taken from demo code
@@ -136,6 +209,8 @@ public class FXMLDocumentController implements Initializable {
     }
     
     
+    
+    
 
     @FXML
     void readPM(ActionEvent event) {
@@ -195,11 +270,7 @@ public class FXMLDocumentController implements Initializable {
             System.out.println("Personal ID: " + p.getID() + "/Name: " + p.getName() + "/Pm Name: " + p.getPmName() + "/Pm ID: " + p.getPmID() + "/Message: " + p.getPm());
         }
     }
-    
-    @FXML
-            private void searchName(ActionEvent event){
-                System.out.println("Clicked");
-            }
+
     
     //Database Manager
     EntityManager manager;
@@ -210,6 +281,16 @@ public class FXMLDocumentController implements Initializable {
         //Code from Demo
         manager = (EntityManager) 
         Persistence.createEntityManagerFactory("IanChongFXMLPU").createEntityManager();
+        
+        //Inspiration taken from Quiz 4 Demo Code
+        ID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        Name.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        PmName.setCellValueFactory(new PropertyValueFactory<>("PmName"));
+        PmID.setCellValueFactory(new PropertyValueFactory<>("PmID"));
+        PM.setCellValueFactory(new PropertyValueFactory<>("Pm"));
+        
+        pmTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        
     }  
     
     
@@ -263,6 +344,20 @@ public class FXMLDocumentController implements Initializable {
     
         return yourPM;
     
+    }
+    
+    public List<Privatemessagemodel> readByName(String name){
+        //Inspiration taken from Quiz 4 Demo Code
+        Query query = manager.createNamedQuery("Privatemessagemodel.findByName");
+
+        query.setParameter("name", name);
+
+        List<Privatemessagemodel> yourPM = query.getResultList();
+        for (Privatemessagemodel p : yourPM) {
+            System.out.println(p.getID() + " " + p.getName() + " " + p.getPmName() + " " + p.getPmID() + " " + p.getPm());
+        }
+
+        return yourPM;
     }
     
     
