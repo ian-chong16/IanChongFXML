@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="674.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="698.0" prefWidth="461.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
         <Button fx:id="button" layoutX="357.0" layoutY="198.0" onAction="#handleButtonAction" text="Click Me!" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
@@ -39,5 +39,6 @@
         </columns>
       </TableView>
       <Button fx:id="buttonAdvancedSearch" layoutX="314.0" layoutY="337.0" mnemonicParsing="false" onAction="#searchNameAdvanced" text="Advanced Search" />
+      <Button fx:id="buttonShowDetails" layoutX="329.0" layoutY="660.0" mnemonicParsing="false" onAction="#actionShowDetails" text="Show Details" />
     </children>
 </AnchorPane>

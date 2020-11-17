@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="IanChongFXML.jar" size="10218" download="eager" />
+    <jar href="IanChongFXML.jar" size="446898" download="eager" />
     <jar href="lib/derbyclient.jar" size="587986" download="eager" />
     <jar href="lib/eclipselink.jar" size="8482035" download="eager" />
     <jar href="lib/javax.persistence_2.1.0.v201304241213.jar" size="164637" download="eager" />
