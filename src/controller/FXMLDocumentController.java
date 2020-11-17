@@ -59,6 +59,9 @@ public class FXMLDocumentController implements Initializable {
     private Button buttonSearch;
     
     @FXML
+    private Button buttonAdvancedSearch;
+    
+    @FXML
     private TableView<Privatemessagemodel> pmTable;
 
     @FXML
@@ -104,13 +107,36 @@ public class FXMLDocumentController implements Initializable {
         
         if (yourPM == null || yourPM.isEmpty()){
             Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Information Dialog Box");// line 2
-            alert.setHeaderText("This is header section to write heading");// line 3
-            alert.setContentText("No student");// line 4
+            alert.setTitle("Information Dialog Box");
+            alert.setHeaderText("This is header section to write heading");
+            alert.setContentText("No student");
             alert.showAndWait(); 
         } 
         
         else{
+            setTableData(yourPM);
+        }
+    }
+    
+    @FXML
+    void searchNameAdvanced (ActionEvent event) {
+        System.out.println("Clicked");
+       
+        String name = textboxName.getText();
+
+        List<Privatemessagemodel> yourPM = readByNameAdvanced(name);
+
+        if (yourPM == null || yourPM.isEmpty()) {
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Information Dialog Box");
+            alert.setHeaderText("This is header section to write heading");
+            alert.setContentText("No student");
+            alert.showAndWait(); 
+        } 
+        
+        else {
+
             setTableData(yourPM);
         }
     }
@@ -358,6 +384,20 @@ public class FXMLDocumentController implements Initializable {
         }
 
         return yourPM;
+    }
+    
+    public List<Privatemessagemodel> readByNameAdvanced(String name){
+        Query query = manager.createNamedQuery("Privatemessagemodel.findByNameAdvanced");
+
+        query.setParameter("name", name);
+
+        List<Privatemessagemodel> yourPM = query.getResultList();
+        for (Privatemessagemodel p : yourPM) {
+            System.out.println(p.getID() + " " + p.getName() + " " + p.getPmName() + " " + p.getPmID() + " " + p.getPm());
+        }
+
+        return yourPM;
+        
     }
     
     
