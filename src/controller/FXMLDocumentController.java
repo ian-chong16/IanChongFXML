@@ -40,6 +40,9 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Button buttonDeletePM;
+    
+    @FXML
+    private Button buttonSearch;
 
     @FXML
     void createPM(ActionEvent event) {
@@ -192,6 +195,11 @@ public class FXMLDocumentController implements Initializable {
             System.out.println("Personal ID: " + p.getID() + "/Name: " + p.getName() + "/Pm Name: " + p.getPmName() + "/Pm ID: " + p.getPmID() + "/Message: " + p.getPm());
         }
     }
+    
+    @FXML
+            private void searchName(ActionEvent event){
+                System.out.println("Clicked");
+            }
     
     //Database Manager
     EntityManager manager;
