@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Privatemessagemodel.findByNameAndPmid", query = "SELECT p FROM Privatemessagemodel p WHERE p.name = :name and p.pmid = :pmid")    
 //custom query 2
     , @NamedQuery(name = "Privatemessagemodel.findByNameAndId", query = "SELECT p FROM Privatemessagemodel p WHERE p.name = :name and p.id = :id") 
-        
+//Inspiration taken from Quiz 4 Demo Code        
     , @NamedQuery(name = "Privatemessagemodel.findByNameAdvanced", query = "SELECT p FROM Privatemessagemodel p WHERE LOWER(p.name) LIKE  CONCAT('%', LOWER(:name), '%')") 
 })
 public class Privatemessagemodel implements Serializable {

@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -128,6 +129,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void searchNameAdvanced (ActionEvent event) {
+        //Inspiration taken from Quiz 4 Demo Code
         System.out.println("Clicked");
        
         String name = textboxName.getText();
@@ -151,6 +153,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void actionShowDetails(ActionEvent event) throws IOException{
+        //Inspiration taken from Quiz 4 Demo Code
         System.out.println("clicked");
 
         
@@ -169,6 +172,37 @@ public class FXMLDocumentController implements Initializable {
 
 
         Stage stage = new Stage();
+        stage.setScene(tableViewScene);
+        stage.show();
+    }
+    
+    @FXML
+    void actionShowDetailsInPlace(ActionEvent event) throws IOException {
+        //Inspiration taken from Quiz 4 Demo Code
+        System.out.println("clicked");
+
+        
+        Privatemessagemodel selectedPM = pmTable.getSelectionModel().getSelectedItem();
+
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DetailedModelView.fxml"));
+
+        Parent detailedModelView = loader.load();
+
+        Scene tableViewScene = new Scene(detailedModelView);
+
+        DetailedModelViewController detailedControlled = loader.getController();
+
+
+        detailedControlled.initData(selectedPM);
+
+        
+        Scene currentScene = ((Node) event.getSource()).getScene();
+        detailedControlled.setPreviousScene(currentScene);
+
+
+        Stage stage = (Stage) currentScene.getWindow();
+
         stage.setScene(tableViewScene);
         stage.show();
     }
